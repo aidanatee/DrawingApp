@@ -6,16 +6,23 @@
 	body {margin: 0;}
 	</style>
 </head>
-<body>
-	<canvas id ="paper"></canvas>
+ <body>
+	<div id="callbatman" style="width:50px; height:50px; float:left;"><img id="callbatman" src="batmansymbol.png" width="50" height="50" /></div>
+    <div id="buttons">
+      <input type="button" id="clear" value="Clear">
+    </div>
+	<canvas id ="canvas"></canvas>
+
+	
 	<script>
-	var canvas = document.getElementById('paper');
+	var canvas = document.getElementById('canvas');
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 
 	var c = canvas.getContext("2d");
 	
-
+    
+    
 	window.addEventListener("touchmove", handleTouchMove, true);
 	window.addEventListener("mousemove", handleMouseMove, true);
 
@@ -27,31 +34,69 @@
     //circle.arc(100, 35, 25, 0, 2 * Math.PI);
     //c.fill(circle);
 	//}
-	 function drawSquare(c,x,y,size) {
+
+
+
+	 function drawCircle(c,x,y,size) {
         // Let's use black by setting RGB values to 0, and 255 alpha (completely opaque)
-        r=0; g=0; b=0; a=255;
+        //r=0; g=0; b=0; a=255;
 
         // Select a fill style
-        c.fillStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";
+        
+
+        
 
         // Draw a filled circle
+        
         c.beginPath();
-        c.arc(x, y, size, 0, Math.PI*2, true); 
+        c.arc(x, y, 8, 0, Math.PI*2, true); 
         c.closePath();
         c.fill();
+       
+       
     } 
 
 	function handleTouchMove (event)
 {
 	event.preventDefault();
 	for (var n = 0; n<event.touches.length; n++){
-		drawSquare(c, event.touches[n].pageX, event.touches[n].pageY, 12);
+		drawCircle(c, event.touches[n].pageX, event.touches[n].pageY, 12);
 }
 }
 
 function handleMouseMove(event){
-	drawSquare(c, event.clientX, event.clientY, 12);
+	drawCircle(c, event.clientX, event.clientY, 12);
 }
+
+var callbatman = document.getElementById('callbatman');
+callbatman.addEventListener('click', clickListener5);
+
+
+function clickListener5(){
+
+    var imageObj = new Image();
+
+    imageObj.onload = function() {
+    
+       
+      c.drawImage(imageObj, 0, 0, imageObj.width,    imageObj.height,     // source rectangle
+                   0, 0, canvas.width, canvas.height);
+
+      };
+      imageObj.src = 'batman.png';
+
+}
+
+
+   document.getElementById('clear').addEventListener('click', function() {
+        c.clearRect(0, 0, canvas.width, canvas.height);
+      }, false);
+
+
+
+
+
+
 </script>
 	</body>
 
